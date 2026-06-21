@@ -1,0 +1,5 @@
+[SYSTEM] Patient TestPatient printed an official receipt.
+[SYSTEM] Patient TestPatient logged out.
+[SYSTEM] Admin generated summary report.
+[SYSTEM] Admin TestAdmin logged out.
+[SYSTEM] Patient TestPatient logged out.

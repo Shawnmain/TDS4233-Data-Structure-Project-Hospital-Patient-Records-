@@ -1,0 +1,3 @@
+[QUEUE] Patient manually created a new Appointment.
+[QUEUE] Patient manually created a new Appointment.
+[QUEUE] Admin TestAdmin served patient: TestPatient

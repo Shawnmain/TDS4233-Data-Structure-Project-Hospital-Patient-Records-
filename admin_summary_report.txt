@@ -1,0 +1,269 @@
+==========================================================
+           HOSPITAL ADMIN SUMMARY REPORT                  
+==========================================================
+Total Active Records in Database: 52
+----------------------------------------------------------
+[1] ID Number : 101
+    Patient Name: TestPatient
+    Disease Type: Fever
+    Bill Amount : $150
+..........................................................
+[2] ID Number : 1001
+    Patient Name: Ali_Bin_Abu
+    Disease Type: High_Fever
+    Bill Amount : $75
+..........................................................
+[3] ID Number : 1002
+    Patient Name: Siti_Aisyah
+    Disease Type: Seasonal_Influenza(Flu)
+    Bill Amount : $85
+..........................................................
+[4] ID Number : 1003
+    Patient Name: Ong_Poh_Ling
+    Disease Type: Severe_Migraine
+    Bill Amount : $120
+..........................................................
+[5] ID Number : 1004
+    Patient Name: Chen_Wei_Shen
+    Disease Type: Food_Poisoning
+    Bill Amount : $180
+..........................................................
+[6] ID Number : 1005
+    Patient Name: Muthu_Samy
+    Disease Type: Asthma_or_Respiratory_Infection
+    Bill Amount : $250
+..........................................................
+[7] ID Number : 1006
+    Patient Name: Alvis_Wong
+    Disease Type: Fractured_or_Broken_Arm
+    Bill Amount : $800
+..........................................................
+[8] ID Number : 1007
+    Patient Name: Xuanming
+    Disease Type: Stomach_Ulcer_or_Gastritis
+    Bill Amount : $150
+..........................................................
+[9] ID Number : 1008
+    Patient Name: Chong_Wei_Feng
+    Disease Type: Kidney_Stones_or_Back_Strain
+    Bill Amount : $450
+..........................................................
+[10] ID Number : 1009
+    Patient Name: Nurul_Ain
+    Disease Type: Allergic_Reaction_(Dermatitis)
+    Bill Amount : $90
+..........................................................
+[11] ID Number : 1010
+    Patient Name: Gopal_Krishnan
+    Disease Type: Severe_Tooth_Decay
+    Bill Amount : $300
+..........................................................
+[12] ID Number : 1011
+    Patient Name: Ahmad_Faizal
+    Disease Type: Hypotension_(Low_Blood_Pressure)
+    Bill Amount : $100
+..........................................................
+[13] ID Number : 1012
+    Patient Name: Lim_Mei_Mei
+    Disease Type: Conjunctivitis_(Pink_Eye)
+    Bill Amount : $70
+..........................................................
+[14] ID Number : 1013
+    Patient Name: Tan_Ah_Kao
+    Disease Type: Inner_Ear_Infection
+    Bill Amount : $80
+..........................................................
+[15] ID Number : 1014
+    Patient Name: Farid_Kamil
+    Disease Type: Diabetes_Type_1_or_2
+    Bill Amount : $150
+..........................................................
+[16] ID Number : 1015
+    Patient Name: Sarah_Connor
+    Disease Type: Strep_Throat_Infection
+    Bill Amount : $95
+..........................................................
+[17] ID Number : 1016
+    Patient Name: Jackson_Wang
+    Disease Type: Muscle_Myopathy
+    Bill Amount : $350
+..........................................................
+[18] ID Number : 1017
+    Patient Name: Kavitha_Rao
+    Disease Type: Rheumatoid_Arthritis
+    Bill Amount : $400
+..........................................................
+[19] ID Number : 1018
+    Patient Name: Amir_Hamzah
+    Disease Type: Hypertension_(High_BP)
+    Bill Amount : $150
+..........................................................
+[20] ID Number : 1019
+    Patient Name: Hassan_Ali
+    Disease Type: Severe_Vitamin_Deficiency
+    Bill Amount : $110
+..........................................................
+[21] ID Number : 1020
+    Patient Name: Fatima_Zahra
+    Disease Type: Malaria_or_Dengue_Fever
+    Bill Amount : $700
+..........................................................
+[22] ID Number : 1021
+    Patient Name: David_Lee
+    Disease Type: Covid-19_Infection
+    Bill Amount : $450
+..........................................................
+[23] ID Number : 1022
+    Patient Name: Michelle_Yeoh
+    Disease Type: Tinnitus
+    Bill Amount : $140
+..........................................................
+[24] ID Number : 1023
+    Patient Name: Syed_Saddiq
+    Disease Type: Severe_Dehydration
+    Bill Amount : $130
+..........................................................
+[25] ID Number : 1024
+    Patient Name: Zhi_Hao
+    Disease Type: Poor_Blood_Circulation
+    Bill Amount : $125
+..........................................................
+[26] ID Number : 1025
+    Patient Name: Amani_Najwa
+    Disease Type: Anemia
+    Bill Amount : $210
+..........................................................
+[27] ID Number : 1026
+    Patient Name: Kumar_Pillai
+    Disease Type: Hyperthyroidism
+    Bill Amount : $380
+..........................................................
+[28] ID Number : 1027
+    Patient Name: Priya_Sharma
+    Disease Type: Tapeworm_or_Parasite
+    Bill Amount : $275
+..........................................................
+[29] ID Number : 1028
+    Patient Name: Khairul_Nizam
+    Disease Type: Irritable_Bowel_Syndrome
+    Bill Amount : $230
+..........................................................
+[30] ID Number : 1029
+    Patient Name: Wei_Ling
+    Disease Type: Chronic_Bronchitis
+    Bill Amount : $420
+..........................................................
+[31] ID Number : 1030
+    Patient Name: Nadia_Hassan
+    Disease Type: Nerve_Damage_(Neuropathy)
+    Bill Amount : $550
+..........................................................
+[32] ID Number : 1031
+    Patient Name: Steven_Tan
+    Disease Type: High_Fever
+    Bill Amount : $75
+..........................................................
+[33] ID Number : 1032
+    Patient Name: Fiona_Apple
+    Disease Type: Seasonal_Influenza(Flu)
+    Bill Amount : $85
+..........................................................
+[34] ID Number : 1033
+    Patient Name: Hafiz_Suip
+    Disease Type: Severe_Migraine
+    Bill Amount : $120
+..........................................................
+[35] ID Number : 1034
+    Patient Name: Jia_Hui
+    Disease Type: Food_Poisoning
+    Bill Amount : $180
+..........................................................
+[36] ID Number : 1035
+    Patient Name: Bala_Murugan
+    Disease Type: Asthma_or_Respiratory_Infection
+    Bill Amount : $250
+..........................................................
+[37] ID Number : 1036
+    Patient Name: Tariq_Aziz
+    Disease Type: Fractured_or_Broken_Arm
+    Bill Amount : $800
+..........................................................
+[38] ID Number : 1037
+    Patient Name: Emily_Blunt
+    Disease Type: Stomach_Ulcer_or_Gastritis
+    Bill Amount : $150
+..........................................................
+[39] ID Number : 1038
+    Patient Name: Zainal_Abidin
+    Disease Type: Kidney_Stones_or_Back_Strain
+    Bill Amount : $450
+..........................................................
+[40] ID Number : 1039
+    Patient Name: Rachel_Green
+    Disease Type: Allergic_Reaction_(Dermatitis)
+    Bill Amount : $90
+..........................................................
+[41] ID Number : 1040
+    Patient Name: Vignes_Waran
+    Disease Type: Severe_Tooth_Decay
+    Bill Amount : $300
+..........................................................
+[42] ID Number : 1041
+    Patient Name: Farah_Ann
+    Disease Type: Hypotension_(Low_Blood_Pressure)
+    Bill Amount : $100
+..........................................................
+[43] ID Number : 1042
+    Patient Name: Kah_Seng
+    Disease Type: Conjunctivitis_(Pink_Eye)
+    Bill Amount : $70
+..........................................................
+[44] ID Number : 1043
+    Patient Name: Anita_Sarawak
+    Disease Type: Inner_Ear_Infection
+    Bill Amount : $80
+..........................................................
+[45] ID Number : 1044
+    Patient Name: Ismail_Sabri
+    Disease Type: Diabetes_Type_1_or_2
+    Bill Amount : $150
+..........................................................
+[46] ID Number : 1045
+    Patient Name: Sharmila_Devi
+    Disease Type: Strep_Throat_Infection
+    Bill Amount : $95
+..........................................................
+[47] ID Number : 1046
+    Patient Name: Alex_Wong
+    Disease Type: Muscle_Myopathy
+    Bill Amount : $350
+..........................................................
+[48] ID Number : 1047
+    Patient Name: Diana_Prince
+    Disease Type: Rheumatoid_Arthritis
+    Bill Amount : $400
+..........................................................
+[49] ID Number : 1048
+    Patient Name: Bruce_Wayne
+    Disease Type: Hypertension_(High_BP)
+    Bill Amount : $150
+..........................................................
+[50] ID Number : 1049
+    Patient Name: Clark_Kent
+    Disease Type: Severe_Vitamin_Deficiency
+    Bill Amount : $110
+..........................................................
+[51] ID Number : 1050
+    Patient Name: Peter_Parker
+    Disease Type: Covid-19_Infection
+    Bill Amount : $450
+..........................................................
+[52] ID Number : 1
+    Patient Name: TestPatient
+    Disease Type: 1
+    Bill Amount : $1
+..........................................................
+----------------------------------------------------------
+Total Expected Hospital Revenue : $12221
+==========================================================
+End of Admin Report.
