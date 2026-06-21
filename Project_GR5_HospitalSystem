@@ -1,42 +1,35 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 
 using namespace std;
 
-
-struct Date
-{
+struct Date {
     int day;
     int month;
     int year;
 };
 
-struct Time
-{
+struct Time {
     int hour;
     int minute;
     int second;
 };
 
-struct Address
-{
+struct Address {
     string street;
     string city;
     string state;
     int zipCode;
 };
 
-struct ContactInfo
-{
+struct ContactInfo {
     string phone;
     string email;
     string emergencyContactName;
     string emergencyContactPhone;
 };
 
-struct Vitals
-{
+struct Vitals {
     double temperature;
     int heartRate;
     int bloodPressureSystolic;
@@ -44,8 +37,7 @@ struct Vitals
     int oxygenLevel;
 };
 
-struct BillingDetails
-{
+struct BillingDetails {
     double consultationFee;
     double medicineFee;
     double roomFee;
@@ -55,65 +47,75 @@ struct BillingDetails
     int isPaid;
 };
 
+class StringUtils {
+public:
+    StringUtils() {}
+    ~StringUtils() {}
 
-class User
-{
+    int getLength(string str) {
+        int count = 0;
+        while (str[count] != '\0') {
+            count = count + 1;
+        }
+        return count;
+    }
+
+    int compareStrings(string s1, string s2) {
+        int len1 = getLength(s1);
+        int len2 = getLength(s2);
+        if (len1 != len2) {
+            return 0;
+        }
+        int i = 0;
+        int match = 1;
+        while (i < len1) {
+            if (s1[i] != s2[i]) {
+                match = 0;
+            }
+            i = i + 1;
+        }
+        return match;
+    }
+};
+
+class User {
 protected:
     string username;
     string password;
     string userType;
     int loginAttempts;
     int isLocked;
-    
     Date registerDate;
     Time registerTime;
 
 public:
-    User()
-    {
+    User() {
         username = "UnknownUser";
         password = "DefaultPassword123";
         userType = "None";
         loginAttempts = 0;
         isLocked = 0;
-        
         registerDate.day = 1;
         registerDate.month = 1;
         registerDate.year = 2024;
-        
         registerTime.hour = 0;
         registerTime.minute = 0;
         registerTime.second = 0;
     }
+    virtual ~User() {}
 
-    virtual ~User()
-    {
-    }
-
-    void setLoginInfo(string u)
-    {
-        username = u;
-    }
-
-    void setLoginInfo(string u, string p)
-    {
-        username = u;
-        password = p;
-    }
-
+    void setLoginInfo(string u) { username = u; }
+    void setLoginInfo(string u, string p) { username = u; password = p; }
     string getUsername() { return username; }
     string getPassword() { return password; }
     void setUserType(string type) { userType = type; }
     string getUserType() { return userType; }
 
-    // Pure virtual functions making this an Abstract Class
     virtual void displayRole() = 0;
     virtual void printDetailedProfile() = 0;
 };
 
-
-class Record
-{
+class Record {
 protected:
     int recordID;
     string recordStatus;
@@ -122,95 +124,509 @@ protected:
     int isArchived;
 
 public:
-    Record()
-    {
+    Record() {
         recordID = -1;
         recordStatus = "Pending Review";
         isArchived = 0;
-        
         creationDate.day = 1;
         creationDate.month = 1;
         creationDate.year = 2024;
-        
         creationTime.hour = 9;
         creationTime.minute = 0;
         creationTime.second = 0;
     }
-
-    virtual ~Record()
-    {
-    }
+    virtual ~Record() {}
 
     void setRecordID(int id) { recordID = id; }
     int getRecordID() { return recordID; }
     void setRecordStatus(string status) { recordStatus = status; }
     string getRecordStatus() { return recordStatus; }
 
-    // Pure virtual functions
     virtual void printShortDetails() = 0;
     virtual void printFullSummary() = 0;
 };
 
+class Patient : public User {
+private:
+    int patientID;
+    string bloodType;
+    int age;
+    double height;
+    double weight;
+    Address patientAddress;
+    ContactInfo patientContact;
+    Vitals patientVitals;
 
-class SystemUIManager
-{
+public:
+    Patient() {
+        patientID = 0;
+        bloodType = "Unknown";
+        age = 0;
+        height = 0.0;
+        weight = 0.0;
+        userType = "Patient";
+        patientAddress.street = "Not Provided";
+        patientAddress.city = "Not Provided";
+        patientAddress.state = "Not Provided";
+        patientAddress.zipCode = 0;
+        patientContact.phone = "000-0000000";
+        patientContact.email = "none@email.com";
+        patientContact.emergencyContactName = "None";
+        patientContact.emergencyContactPhone = "000-0000000";
+        patientVitals.temperature = 36.5;
+        patientVitals.heartRate = 80;
+        patientVitals.bloodPressureSystolic = 120;
+        patientVitals.bloodPressureDiastolic = 80;
+        patientVitals.oxygenLevel = 98;
+    }
+    ~Patient() {}
+
+    void setAge(int a) { age = a; }
+    void setBloodType(string bt) { bloodType = bt; }
+    void setHeight(double h) { height = h; }
+    void setWeight(double w) { weight = w; }
+
+    void displayRole() {
+        cout << "======================================" << endl;
+        cout << "SYSTEM ROLE VERIFICATION" << endl;
+        cout << "Role Type  : Registered Patient" << endl;
+        cout << "Username   : " << username << endl;
+        cout << "======================================" << endl;
+    }
+
+    void printDetailedProfile() {
+        cout << "---------- PATIENT DETAILED PROFILE ----------" << endl;
+        cout << "Current Age     : " << age << " years old" << endl;
+        cout << "Blood Type      : " << bloodType << endl;
+        cout << "Body Height     : " << height << " cm" << endl;
+        cout << "Body Weight     : " << weight << " kg" << endl;
+        cout << "----------------------------------------------" << endl;
+    }
+};
+
+class Appointment : public Record {
+public:
+    string patientName;
+    string disease;
+    string symptoms;
+    string prescribedMedicine;
+    double bill;
+    int assignedRoom;
+    int assignedDoctorID;
+    int isEmergency;
+    string insuranceProvider;
+    double insuranceCoverPercentage;
+    BillingDetails apptBilling;
+
+    Appointment() {
+        recordID = -1;
+        patientName = "N/A";
+        disease = "None";
+        symptoms = "None";
+        prescribedMedicine = "None";
+        bill = 0.0;
+        assignedRoom = 0;
+        assignedDoctorID = 0;
+        isEmergency = 0;
+        insuranceProvider = "Self-Pay";
+        insuranceCoverPercentage = 0.0;
+        recordStatus = "Active";
+        
+        apptBilling.consultationFee = 0.0;
+        apptBilling.medicineFee = 0.0;
+        apptBilling.roomFee = 0.0;
+        apptBilling.taxAmount = 0.0;
+        apptBilling.discountAmount = 0.0;
+        apptBilling.totalAmountDue = 0.0;
+        apptBilling.isPaid = 0;
+    }
+
+    Appointment(int id, string name, string dis, double b) {
+        recordID = id;
+        patientName = name;
+        disease = dis;
+        bill = b;
+        symptoms = "Not recorded yet";
+        prescribedMedicine = "Pending Doctor Review";
+        assignedRoom = 101;
+        assignedDoctorID = 999;
+        isEmergency = 0;
+        insuranceProvider = "Standard Care";
+        insuranceCoverPercentage = 0.0;
+        recordStatus = "Active";
+        
+        apptBilling.consultationFee = b * 0.5;
+        apptBilling.medicineFee = b * 0.3;
+        apptBilling.roomFee = b * 0.2;
+        apptBilling.taxAmount = b * 0.06;
+        apptBilling.discountAmount = 0.0;
+        apptBilling.totalAmountDue = b + apptBilling.taxAmount;
+        apptBilling.isPaid = 0;
+    }
+
+    ~Appointment() {}
+
+    int getApptID() {
+        return recordID;
+    }
+
+    double calculateFinalBill() {
+        double base = bill;
+        double discount = (base * insuranceCoverPercentage) / 100.0;
+        double tax = base * 0.06;
+        double finalAmount = base + tax - discount;
+        if (finalAmount < 0.0) {
+            finalAmount = 0.0;
+        }
+        return finalAmount;
+    }
+
+    void printShortDetails() {
+        cout << "=====================================" << endl;
+        cout << "Appt ID Number : " << recordID << endl;
+        cout << "Patient Name   : " << patientName << endl;
+        cout << "Disease Type   : " << disease << endl;
+        cout << "Base Bill Cost : $" << bill << endl;
+        cout << "Current Status : " << recordStatus << endl;
+        cout << "=====================================" << endl;
+    }
+
+    void printFullSummary() {
+        cout << "*********************************************" << endl;
+        cout << "Record ID       : " << recordID << endl;
+        cout << "Status          : " << recordStatus << endl;
+        cout << "Patient Name    : " << patientName << endl;
+        cout << "Disease/Reason  : " << disease << endl;
+        cout << "Final Due Bill  : $" << calculateFinalBill() << endl;
+        cout << "*********************************************" << endl;
+    }
+};
+
+class SymptomChecker {
+private:
+    char getSafeChar() {
+        char c;
+        cin >> c;
+        cin.ignore(10000, '\n');
+        return c;
+    }
+    
+public:
+    SymptomChecker() {}
+    ~SymptomChecker() {}
+
+    int runDiagnosticTest() {
+        int finalDiseaseCode = 100;
+        char userInput;
+        int totalSymptomScore = 0;
+        
+        cout << "*****************************************************" << endl;
+        cout << "   ADVANCED AI MEDICAL DIAGNOSTIC SYSTEM (50 STEPS)  " << endl;
+        cout << "*****************************************************" << endl;
+        cout << "Please answer 'y' for YES or 'n' for NO." << endl;
+        
+        cout << "Q1: Do you have a high fever (above 38 C)? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 15; finalDiseaseCode = 1; }
+        
+        cout << "Q2: Do you have a continuous dry cough? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 10; finalDiseaseCode = 2; }
+        
+        cout << "Q3: Do you experience shortness of breath? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 25; finalDiseaseCode = 3; }
+        
+        cout << "Q4: Do you have a severe, throbbing headache? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 12; finalDiseaseCode = 4; }
+        
+        cout << "Q5: Does your stomach hurt badly after meals? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 14; finalDiseaseCode = 5; }
+        
+        cout << "Q6: Are you vomiting or feeling nauseous? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 18; finalDiseaseCode = 6; }
+        
+        cout << "Q7: Do you have a red, itchy rash on your skin? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 8; finalDiseaseCode = 7; }
+        
+        cout << "Q8: Did you fall and feel sharp pain in your arm? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 30; finalDiseaseCode = 8; }
+        
+        cout << "Q9: Did you fall and feel sharp pain in your leg? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 30; finalDiseaseCode = 9; }
+        
+        cout << "Q10: Do you feel sharp pain in your lower back? (y/n): ";
+        userInput = getSafeChar();
+        if (userInput == 'y') { totalSymptomScore = totalSymptomScore + 11; finalDiseaseCode = 10; }
+        
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Diagnostic Questionnaire Complete!" << endl;
+        cout << "Your Total Symptom Severity Score is: " << totalSymptomScore << endl;
+        cout << "-----------------------------------------------------" << endl;
+        
+        return finalDiseaseCode;
+    }
+};
+
+class DiseaseDatabase {
+public:
+    DiseaseDatabase() {}
+    ~DiseaseDatabase() {}
+
+    string getDiseaseName(int code) {
+        string name = "General_Checkup/Undiagnosed";
+        if (code == 1) { name = "High_Fever"; }
+        else if (code == 2) { name = "Seasonal_Influenza(Flu)"; }
+        else if (code == 3) { name = "Asthma_or_Respiratory_Infection"; }
+        else if (code == 4) { name = "Severe_Migraine"; }
+        else if (code == 5) { name = "Stomach_Ulcer_or_Gastritis"; }
+        else if (code == 6) { name = "Food_Poisoning"; }
+        else if (code == 7) { name = "Allergic_Reaction_(Dermatitis)"; }
+        else if (code == 8) { name = "Fractured_or_Broken_Arm"; }
+        else if (code == 9) { name = "Fractured_or_Broken_Leg"; }
+        else if (code == 10) { name = "Kidney_Stones_or_Back_Strain"; }
+        return name;
+    }
+
+    double getEstimatedBill(int code) {
+        double bill = 50.0;
+        if (code == 1) { bill = 75.0; }
+        else if (code == 2) { bill = 85.0; }
+        else if (code == 3) { bill = 250.0; }
+        else if (code == 4) { bill = 120.0; }
+        else if (code == 5) { bill = 150.0; }
+        else if (code == 6) { bill = 180.0; }
+        else if (code == 7) { bill = 90.0; }
+        else if (code == 8) { bill = 800.0; }
+        else if (code == 9) { bill = 950.0; }
+        else if (code == 10) { bill = 450.0; }
+        return bill;
+    }
+};
+
+class ReceiptGenerator {
+public:
+    ReceiptGenerator() {}
+    ~ReceiptGenerator() {}
+
+    void printOfficialReceipt(Appointment currentAppt) {
+        int r_id = currentAppt.getApptID();
+        string r_name = currentAppt.patientName;
+        string r_disease = currentAppt.disease;
+        double r_consult = currentAppt.apptBilling.consultationFee;
+        double r_meds = currentAppt.apptBilling.medicineFee;
+        double r_room = currentAppt.apptBilling.roomFee;
+        double r_tax = currentAppt.apptBilling.taxAmount;
+        double r_discount = currentAppt.apptBilling.discountAmount;
+        double r_total = currentAppt.calculateFinalBill();
+
+        cout << "\n";
+        cout << "  +--------------------------------------------------------+" << endl;
+        cout << "  |                                                        |" << endl;
+        cout << "  |             OFFICIAL HOSPITAL TAX INVOICE              |" << endl;
+        cout << "  |             =============================              |" << endl;
+        cout << "  |                                                        |" << endl;
+        
+        cout << "  |  Invoice ID Number : " << r_id << "                               |" << endl;
+        cout << "  |  Patient Name      : " << r_name;
+        
+        StringUtils textTool;
+        int nameLength = textTool.getLength(r_name);
+        int spacesNeeded = 34 - nameLength;
+        int s = 0;
+        while (s < spacesNeeded) {
+            cout << " ";
+            s = s + 1;
+        }
+        cout << "|" << endl;
+        
+        cout << "  |  Diagnosis         : " << r_disease;
+        
+        int disLength = textTool.getLength(r_disease);
+        int disSpacesNeeded = 34 - disLength;
+        int ds = 0;
+        while (ds < disSpacesNeeded) {
+            cout << " ";
+            ds = ds + 1;
+        }
+        cout << "|" << endl;
+        
+        cout << "  |                                                        |" << endl;
+        cout << "  |--------------------------------------------------------|" << endl;
+        cout << "  |                 ITEMIZED BILLING SUMMARY               |" << endl;
+        cout << "  |--------------------------------------------------------|" << endl;
+        cout << "  |                                                        |" << endl;
+        cout << "  |  1. Doctor Consultation Fee         : $" << r_consult << endl;
+        cout << "  |  2. Pharmacy & Medicine Charges     : $" << r_meds << endl;
+        cout << "  |  3. Facilities & Room Usage         : $" << r_room << endl;
+        cout << "  |                                                        |" << endl;
+        cout << "  |--------------------------------------------------------|" << endl;
+        cout << "  |  Subtotal (Before Tax)              : $" << (r_consult + r_meds + r_room) << endl;
+        cout << "  |  Government Tax (6%)                : +$" << r_tax << endl;
+        cout << "  |  Insurance/Promotion Discount       : -$" << r_discount << endl;
+        cout << "  |========================================================|" << endl;
+        cout << "  |  FINAL AMOUNT DUE                   : $" << r_total << endl;
+        cout << "  |========================================================|" << endl;
+        cout << "  |                                                        |" << endl;
+        cout << "  |      Thank you for trusting our healthcare system.     |" << endl;
+        cout << "  |        Please retain this receipt for insurance.       |" << endl;
+        cout << "  |                                                        |" << endl;
+        cout << "  +--------------------------------------------------------+" << endl;
+        cout << "\n";
+    }
+};
+
+class SystemUIManager {
 public:
     SystemUIManager() {}
     ~SystemUIManager() {}
 
-    void printWelcomeScreen()
-    {
+    void printWelcomeScreen() {
         cout << endl;
         cout << "  **********************************************************" << endl;
-        cout << "  * *" << endl;
-        cout << "  * ================================================    *" << endl;
-        cout << "  * |                                              |    *" << endl;
-        cout << "  * |             +                  +             |    *" << endl;
-        cout << "  * |             +                  +             |    *" << endl;
-        cout << "  * |       +++++++++++++      +++++++++++++       |    *" << endl;
-        cout << "  * |       +  HOSPITAL +      + EMERGENCY +       |    *" << endl;
-        cout << "  * |       +++++++++++++      +++++++++++++       |    *" << endl;
-        cout << "  * |             +                  +             |    *" << endl;
-        cout << "  * |             +                  +             |    *" << endl;
-        cout << "  * |                                              |    *" << endl;
-        cout << "  * ================================================    *" << endl;
-        cout << "  * *" << endl;
         cout << "  * WELCOME TO THE ADVANCED MEDICAL SYSTEM        *" << endl;
-        cout << "  * [ DEVELOPED BY DIPLOMA STUDENTS ]           *" << endl;
-        cout << "  * *" << endl;
         cout << "  **********************************************************" << endl;
         cout << endl;
-        cout << "  Initializing System Core Modules..." << endl;
-        cout << "  System Ready. Please proceed." << endl;
-        cout << endl;
-    }
-
-    void printLoadingEffect()
-    {
-        cout << "  Processing Data ";
-        int i = 0;
-        while (i < 5)
-        {
-            cout << ". ";
-            volatile int j = 0;
-            while (j < 9000000) { j = j + 1; }
-            i = i + 1;
-        }
-        cout << " [DONE]" << endl;
     }
 };
 
+Appointment globalApptArray[100];
+int globalApptCount = 0;
 
-int main()
-{
+void runCustomerModule(string currentLoggedInUser) {
+    int menuChoice;
+    int keepRunningPatientModule = 1;
+    Patient currentPatient;
+    currentPatient.setLoginInfo(currentLoggedInUser);
+    
+    SymptomChecker symptomSys;
+    DiseaseDatabase diseaseSys;
+    StringUtils stringTool;
+    
+    currentPatient.displayRole();
+    
+    while (keepRunningPatientModule == 1) {
+        cout << "\n==================================================" << endl;
+        cout << "           CUSTOMER (PATIENT) DASHBOARD           " << endl;
+        cout << "==================================================" << endl;
+        cout << "1. Make Appointment (Use AI Symptom Diagnosis)" << endl;
+        cout << "2. Make Appointment (Manual Entry)" << endl;
+        cout << "3. View My Registered Appointments" << endl;
+        cout << "4. View My Detailed Patient Profile" << endl;
+        cout << "5. Print Official Payment Receipt" << endl;
+        cout << "6. Logout and Return to Main Menu" << endl;
+        cout << "==================================================" << endl;
+        cout << "Please select an option number: ";
+        cin >> menuChoice;
+        
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+		 
+        if (menuChoice == 1) {
+            cout << "\n--- Initializing AI Diagnosis System ---" << endl;
+            int suggestedDiseaseCode = symptomSys.runDiagnosticTest();
+            string finalDiseaseName = diseaseSys.getDiseaseName(suggestedDiseaseCode);
+            double finalEstimatedBill = diseaseSys.getEstimatedBill(suggestedDiseaseCode);
+            
+            cout << "\n> System Analysis Result:" << endl;
+            cout << "> You are likely experiencing: " << finalDiseaseName << endl;
+            cout << "> Estimated base bill amount : $" << finalEstimatedBill << endl;
+            
+            int newApptID;
+            cout << "Please enter a unique number as your Appointment ID: ";
+            cin >> newApptID;
+            
+            Appointment newAppt(newApptID, currentLoggedInUser, finalDiseaseName, finalEstimatedBill);
+            globalApptArray[globalApptCount] = newAppt;
+            globalApptCount = globalApptCount + 1;
+            
+            cout << ">> Success! Appointment created." << endl;
+        }
+        else if (menuChoice == 2) {
+            cout << "\n--- Manual Appointment Entry ---" << endl;
+            int manualID;
+            cout << "Enter a unique Appointment ID (Numbers only): ";
+            cin >> manualID;
+            
+            string manualDisease;
+            cout << "Enter your disease/reason: ";
+            cin.ignore(10000, '\n'); 
+            getline(cin, manualDisease);
+            
+            double manualBill;
+            cout << "Enter the expected bill amount: ";
+            cin >> manualBill;
+            
+            Appointment manualAppt(manualID, currentLoggedInUser, manualDisease, manualBill);
+            globalApptArray[globalApptCount] = manualAppt;
+            globalApptCount = globalApptCount + 1;
+            
+            cout << ">> Success! Appointment created manually." << endl;
+        }
+        else if (menuChoice == 3) {
+            cout << "\n--- My Appointment History ---" << endl;
+            int i = 0;
+            while (i < globalApptCount) {
+                string recordName = globalApptArray[i].patientName;
+                int isMyRecord = stringTool.compareStrings(recordName, currentLoggedInUser);
+                if (isMyRecord == 1) {
+                    globalApptArray[i].printShortDetails();
+                }
+                i = i + 1;
+            }
+        }
+        else if (menuChoice == 4) {
+             cout << "\n--- My Detailed Patient Profile ---" << endl;
+            currentPatient.printDetailedProfile();
+        }
+        else if (menuChoice == 5) {
+            int receiptTargetID;
+            cout << "\n--- Print Official Receipt ---" << endl;
+            cout << "Enter your Appointment ID to print receipt: ";
+            cin >> receiptTargetID;
+            
+            int foundIndex = -1;
+            int idx = 0;
+            while (idx < globalApptCount) {
+                if (globalApptArray[idx].getApptID() == receiptTargetID) {
+                    foundIndex = idx;
+                    break;
+                }
+                idx = idx + 1;
+            }
+            
+            if (foundIndex != -1) {
+                string recordOwner = globalApptArray[foundIndex].patientName;
+                int isOwner = stringTool.compareStrings(recordOwner, currentLoggedInUser);
+                if (isOwner == 1) {
+                    ReceiptGenerator receiptSys;
+                    receiptSys.printOfficialReceipt(globalApptArray[foundIndex]);
+                }
+            }
+        }
+        else if (menuChoice == 6) {
+            keepRunningPatientModule = 0; 
+        }
+    }
+}
+
+int main() {
     SystemUIManager uiSys;
     uiSys.printWelcomeScreen();
     
     int mainChoice = 0;
     int isSystemRunning = 1;
 
-    while (isSystemRunning == 1)
-    {
+    while (isSystemRunning == 1) {
         cout << "\n==========================================================" << endl;
         cout << "                  MAIN ACCESS MENU                        " << endl;
         cout << "==========================================================" << endl;
@@ -221,30 +637,21 @@ int main()
         cout << "Please select your access level: ";
         cin >> mainChoice;
 
-        if (cin.fail())
-        {
+        if (cin.fail()) {
             cin.clear();             
             cin.ignore(10000, '\n'); 
-            cout << ">> SYSTEM ALERT: Invalid input! Please enter numbers only." << endl;
             continue;
         }
 
-        if (mainChoice == 1)
-        {
-            cout << "\n[!] Patient Module is currently under construction by Lee Jia Qian." << endl;
+        if (mainChoice == 1) {
+            string testUser = "TestPatient";
+            runCustomerModule(testUser);
         }
-        else if (mainChoice == 2)
-        {
+        else if (mainChoice == 2) {
             cout << "\n[!] Staff Module is currently under construction by Yeoh Xuan Ming." << endl;
         }
-        else if (mainChoice == 3)
-        {
+        else if (mainChoice == 3) {
             isSystemRunning = 0; 
-            cout << "Exiting the hospital system safely. Goodbye!" << endl;
-        }
-        else
-        {
-            cout << ">> Invalid input. Please enter 1, 2, or 3." << endl;
         }
     }
     
