@@ -1,0 +1,252 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+
+struct Date
+{
+    int day;
+    int month;
+    int year;
+};
+
+struct Time
+{
+    int hour;
+    int minute;
+    int second;
+};
+
+struct Address
+{
+    string street;
+    string city;
+    string state;
+    int zipCode;
+};
+
+struct ContactInfo
+{
+    string phone;
+    string email;
+    string emergencyContactName;
+    string emergencyContactPhone;
+};
+
+struct Vitals
+{
+    double temperature;
+    int heartRate;
+    int bloodPressureSystolic;
+    int bloodPressureDiastolic;
+    int oxygenLevel;
+};
+
+struct BillingDetails
+{
+    double consultationFee;
+    double medicineFee;
+    double roomFee;
+    double taxAmount;
+    double discountAmount;
+    double totalAmountDue;
+    int isPaid;
+};
+
+
+class User
+{
+protected:
+    string username;
+    string password;
+    string userType;
+    int loginAttempts;
+    int isLocked;
+    
+    Date registerDate;
+    Time registerTime;
+
+public:
+    User()
+    {
+        username = "UnknownUser";
+        password = "DefaultPassword123";
+        userType = "None";
+        loginAttempts = 0;
+        isLocked = 0;
+        
+        registerDate.day = 1;
+        registerDate.month = 1;
+        registerDate.year = 2024;
+        
+        registerTime.hour = 0;
+        registerTime.minute = 0;
+        registerTime.second = 0;
+    }
+
+    virtual ~User()
+    {
+    }
+
+    void setLoginInfo(string u)
+    {
+        username = u;
+    }
+
+    void setLoginInfo(string u, string p)
+    {
+        username = u;
+        password = p;
+    }
+
+    string getUsername() { return username; }
+    string getPassword() { return password; }
+    void setUserType(string type) { userType = type; }
+    string getUserType() { return userType; }
+
+    // Pure virtual functions making this an Abstract Class
+    virtual void displayRole() = 0;
+    virtual void printDetailedProfile() = 0;
+};
+
+
+class Record
+{
+protected:
+    int recordID;
+    string recordStatus;
+    Date creationDate;
+    Time creationTime;
+    int isArchived;
+
+public:
+    Record()
+    {
+        recordID = -1;
+        recordStatus = "Pending Review";
+        isArchived = 0;
+        
+        creationDate.day = 1;
+        creationDate.month = 1;
+        creationDate.year = 2024;
+        
+        creationTime.hour = 9;
+        creationTime.minute = 0;
+        creationTime.second = 0;
+    }
+
+    virtual ~Record()
+    {
+    }
+
+    void setRecordID(int id) { recordID = id; }
+    int getRecordID() { return recordID; }
+    void setRecordStatus(string status) { recordStatus = status; }
+    string getRecordStatus() { return recordStatus; }
+
+    // Pure virtual functions
+    virtual void printShortDetails() = 0;
+    virtual void printFullSummary() = 0;
+};
+
+
+class SystemUIManager
+{
+public:
+    SystemUIManager() {}
+    ~SystemUIManager() {}
+
+    void printWelcomeScreen()
+    {
+        cout << endl;
+        cout << "  **********************************************************" << endl;
+        cout << "  * *" << endl;
+        cout << "  * ================================================    *" << endl;
+        cout << "  * |                                              |    *" << endl;
+        cout << "  * |             +                  +             |    *" << endl;
+        cout << "  * |             +                  +             |    *" << endl;
+        cout << "  * |       +++++++++++++      +++++++++++++       |    *" << endl;
+        cout << "  * |       +  HOSPITAL +      + EMERGENCY +       |    *" << endl;
+        cout << "  * |       +++++++++++++      +++++++++++++       |    *" << endl;
+        cout << "  * |             +                  +             |    *" << endl;
+        cout << "  * |             +                  +             |    *" << endl;
+        cout << "  * |                                              |    *" << endl;
+        cout << "  * ================================================    *" << endl;
+        cout << "  * *" << endl;
+        cout << "  * WELCOME TO THE ADVANCED MEDICAL SYSTEM        *" << endl;
+        cout << "  * [ DEVELOPED BY DIPLOMA STUDENTS ]           *" << endl;
+        cout << "  * *" << endl;
+        cout << "  **********************************************************" << endl;
+        cout << endl;
+        cout << "  Initializing System Core Modules..." << endl;
+        cout << "  System Ready. Please proceed." << endl;
+        cout << endl;
+    }
+
+    void printLoadingEffect()
+    {
+        cout << "  Processing Data ";
+        int i = 0;
+        while (i < 5)
+        {
+            cout << ". ";
+            volatile int j = 0;
+            while (j < 9000000) { j = j + 1; }
+            i = i + 1;
+        }
+        cout << " [DONE]" << endl;
+    }
+};
+
+
+int main()
+{
+    SystemUIManager uiSys;
+    uiSys.printWelcomeScreen();
+    
+    int mainChoice = 0;
+    int isSystemRunning = 1;
+
+    while (isSystemRunning == 1)
+    {
+        cout << "\n==========================================================" << endl;
+        cout << "                  MAIN ACCESS MENU                        " << endl;
+        cout << "==========================================================" << endl;
+        cout << "1. Enter Customer (Patient) Module" << endl;
+        cout << "2. Enter Staff (Admin) Module" << endl;
+        cout << "3. Exit the System Completely" << endl;
+        cout << "==========================================================" << endl;
+        cout << "Please select your access level: ";
+        cin >> mainChoice;
+
+        if (cin.fail())
+        {
+            cin.clear();             
+            cin.ignore(10000, '\n'); 
+            cout << ">> SYSTEM ALERT: Invalid input! Please enter numbers only." << endl;
+            continue;
+        }
+
+        if (mainChoice == 1)
+        {
+            cout << "\n[!] Patient Module is currently under construction by Lee Jia Qian." << endl;
+        }
+        else if (mainChoice == 2)
+        {
+            cout << "\n[!] Staff Module is currently under construction by Yeoh Xuan Ming." << endl;
+        }
+        else if (mainChoice == 3)
+        {
+            isSystemRunning = 0; 
+            cout << "Exiting the hospital system safely. Goodbye!" << endl;
+        }
+        else
+        {
+            cout << ">> Invalid input. Please enter 1, 2, or 3." << endl;
+        }
+    }
+    
+    return 0; 
+}
