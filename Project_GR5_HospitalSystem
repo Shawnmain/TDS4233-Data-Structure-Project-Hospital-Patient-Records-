@@ -322,6 +322,120 @@ public:
     }
 };
 
+class AlgorithmManager {
+public:
+    AlgorithmManager() {}
+    ~AlgorithmManager() {}
+
+    void performBubbleSort(Appointment array[], int arraySize) {
+        int i = 0;
+        int isSorted = 0;
+        Appointment tempAppt;
+        
+        while (i < arraySize) {
+            if (isSorted == 1) { break; }
+            isSorted = 1;
+            int j = 0;
+            while (j < (arraySize - i - 1)) {
+                if (array[j].getApptID() > array[j + 1].getApptID()) {
+                    tempAppt = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = tempAppt;
+                    isSorted = 0;
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+    }
+
+    void performBubbleSortByBill(Appointment array[], int arraySize) {
+        int i = 0;
+        int isSorted = 0;
+        Appointment tempAppt;
+        
+        while (i < arraySize) {
+            if (isSorted == 1) { break; }
+            isSorted = 1;
+            int j = 0;
+            while (j < (arraySize - i - 1)) {
+                if (array[j].bill > array[j + 1].bill) {
+                    tempAppt = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = tempAppt;
+                    isSorted = 0;
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+    }
+
+    void performBubbleSortByName(Appointment array[], int arraySize) {
+        int i = 0;
+        int isSorted = 0;
+        Appointment tempAppt;
+        
+        while (i < arraySize) {
+            if (isSorted == 1) { break; }
+            isSorted = 1;
+            int j = 0;
+            while (j < (arraySize - i - 1)) {
+                if (array[j].patientName > array[j + 1].patientName) {
+                    tempAppt = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = tempAppt;
+                    isSorted = 0;
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+    }
+
+    int performBinarySearch(Appointment table[], int totalItems, int targetID) {
+        int firstIndex = 0;
+        int lastIndex = totalItems - 1;
+        int foundFlag = 0;
+        int finalResult = -1;
+        
+        while (firstIndex <= lastIndex) {
+            if (foundFlag == 1) { break; }
+            int middleIndex = (firstIndex + lastIndex) / 2;
+            int middleID = table[middleIndex].getApptID();
+            
+            if (targetID == middleID) {
+                foundFlag = 1;
+                finalResult = middleIndex;
+            } else {
+                if (targetID < middleID) {
+                    lastIndex = middleIndex - 1;
+                } else {
+                    firstIndex = middleIndex + 1;
+                }
+            }
+        }
+        return finalResult;
+    }
+
+    int performLinearSearchByName(Appointment table[], int totalItems, string targetName) {
+        int i = 0;
+        int foundIndex = -1;
+        StringUtils stringTool;
+        
+        while (i < totalItems) {
+            string currentName = table[i].patientName;
+            int isMatch = stringTool.compareStrings(currentName, targetName);
+            if (isMatch == 1) {
+                foundIndex = i;
+                break;
+            }
+            i = i + 1;
+        }
+        return foundIndex;
+    }
+};
+
 class SymptomChecker {
 private:
     char getSafeChar() {
@@ -481,6 +595,7 @@ void runCustomerModule(string currentLoggedInUser) {
     SymptomChecker symptomSys;
     DiseaseDatabase diseaseSys;
     StringUtils stringTool;
+    AlgorithmManager algoSys;
     
     currentPatient.displayRole();
     
@@ -490,7 +605,7 @@ void runCustomerModule(string currentLoggedInUser) {
         cout << "==================================================" << endl;
         cout << "1. Make Appointment (Manual Entry)" << endl;
         cout << "2. View My Registered Appointments" << endl;
-        cout << "3. Print Official Payment Receipt" << endl;
+        cout << "3. Print Official Payment Receipt (Using Binary Search)" << endl;
         cout << "4. Logout and Return to Main Menu" << endl;
         cout << "==================================================" << endl;
         cout << "Please select an option number: ";
@@ -541,19 +656,14 @@ void runCustomerModule(string currentLoggedInUser) {
             cout << "Enter your Appointment ID to print receipt: ";
             cin >> receiptTargetID;
             
-            int foundIndex = -1;
-            int idx = 0;
-            while (idx < globalApptCount) {
-                if (globalApptArray[idx].getApptID() == receiptTargetID) {
-                    foundIndex = idx;
-                    break;
-                }
-                idx = idx + 1;
-            }
+            algoSys.performBubbleSort(globalApptArray, globalApptCount);
+            int foundIndex = algoSys.performBinarySearch(globalApptArray, globalApptCount, receiptTargetID);
             
             if (foundIndex != -1) {
                 ReceiptGenerator receiptSys;
                 receiptSys.printOfficialReceipt(globalApptArray[foundIndex]);
+            } else {
+                cout << ">> Receipt NOT FOUND." << endl;
             }
         }
         else if (menuChoice == 4) {
@@ -568,6 +678,7 @@ void runAdminModule(string currentLoggedInStaff) {
     Staff currentAdmin;
     currentAdmin.setLoginInfo(currentLoggedInStaff);
     AdminReportBuilder adminReportSys;
+    AlgorithmManager algoSys;
     
     currentAdmin.displayRole();
     
@@ -576,11 +687,13 @@ void runAdminModule(string currentLoggedInStaff) {
         cout << "            STAFF (ADMIN) DASHBOARD               " << endl;
         cout << "==================================================" << endl;
         cout << "1. View All Patient Records" << endl;
-        cout << "2. Edit an Appointment Record" << endl;
-        cout << "3. Delete an Appointment Record (Array Shift)" << endl;
-        cout << "4. Generate Admin Summary Report (.txt)" << endl;
-        cout << "5. View My Detailed Staff Profile" << endl;
-        cout << "6. Logout and Return to Main Menu" << endl;
+        cout << "2. Sort Appointments (Bubble Sort)" << endl;
+        cout << "3. Search Appointment (Binary Search by ID)" << endl;
+        cout << "4. Search Appointment (Linear Search by Name)" << endl;
+        cout << "5. Edit an Appointment Record" << endl;
+        cout << "6. Delete an Appointment Record" << endl;
+        cout << "7. Generate Admin Summary Report (.txt)" << endl;
+        cout << "8. Logout and Return to Main Menu" << endl;
         cout << "==================================================" << endl;
         cout << "Please select an option number: ";
         cin >> menuChoice;
@@ -600,20 +713,70 @@ void runAdminModule(string currentLoggedInStaff) {
             }
         }
         else if (menuChoice == 2) {
+            cout << "\n--- Sorting Database ---" << endl;
+            cout << "1. Sort by Appointment ID" << endl;
+            cout << "2. Sort by Bill Amount" << endl;
+            cout << "3. Sort by Patient Name" << endl;
+            cout << "Select sort type: ";
+            int sortChoice;
+            cin >> sortChoice;
+            
+            if (sortChoice == 2) {
+                algoSys.performBubbleSortByBill(globalApptArray, globalApptCount);
+                cout << ">> Sorted by Bill Amount." << endl;
+            } else if (sortChoice == 3) {
+                algoSys.performBubbleSortByName(globalApptArray, globalApptCount);
+                cout << ">> Sorted by Patient Name." << endl;
+            } else {
+                algoSys.performBubbleSort(globalApptArray, globalApptCount);
+                cout << ">> Sorted by Appointment ID." << endl;
+            }
+
+            int i = 0;
+            while (i < globalApptCount) {
+                globalApptArray[i].printShortDetails();
+                i = i + 1;
+            }
+        }
+        else if (menuChoice == 3) {
+            int searchTargetID;
+            cout << "\n--- Search Record by ID (Binary Search) ---" << endl;
+            cout << "Enter Appointment ID to search: ";
+            cin >> searchTargetID;
+            
+            algoSys.performBubbleSort(globalApptArray, globalApptCount);
+            int foundResultIndex = algoSys.performBinarySearch(globalApptArray, globalApptCount, searchTargetID);
+            
+            if (foundResultIndex != -1) {
+                cout << ">> Target Record Found!" << endl;
+                globalApptArray[foundResultIndex].printFullSummary();
+            } else {
+                cout << ">> Search Failed. Record NOT FOUND." << endl;
+            }
+        }
+        else if (menuChoice == 4) {
+            string searchTargetName;
+            cout << "\n--- Search Record by Name (Linear Search) ---" << endl;
+            cout << "Enter Patient Name to search: ";
+            cin >> searchTargetName;
+            
+            int foundResultIndex = algoSys.performLinearSearchByName(globalApptArray, globalApptCount, searchTargetName);
+            
+            if (foundResultIndex != -1) {
+                cout << ">> Target Record Found!" << endl;
+                globalApptArray[foundResultIndex].printFullSummary();
+            } else {
+                cout << ">> Search Failed. Record NOT FOUND." << endl;
+            }
+        }
+        else if (menuChoice == 5) {
             int editTargetID;
             cout << "\n--- Edit Record Details ---" << endl;
             cout << "Enter Appointment ID to edit: ";
             cin >> editTargetID;
 
-            int foundIndex = -1;
-            int i = 0;
-            while (i < globalApptCount) {
-                if (globalApptArray[i].getApptID() == editTargetID) {
-                    foundIndex = i;
-                    break;
-                }
-                i = i + 1;
-            }
+            algoSys.performBubbleSort(globalApptArray, globalApptCount);
+            int foundIndex = algoSys.performBinarySearch(globalApptArray, globalApptCount, editTargetID);
 
             if (foundIndex != -1) {
                 string newDiseaseInfo;
@@ -632,21 +795,14 @@ void runAdminModule(string currentLoggedInStaff) {
                 cout << ">> Record not found." << endl;
             }
         }
-        else if (menuChoice == 3) {
+        else if (menuChoice == 6) {
             int deleteTargetID;
             cout << "\n--- Delete Record from Database ---" << endl;
             cout << "Enter Appointment ID to fully delete: ";
             cin >> deleteTargetID;
 
-            int foundIndex = -1;
-            int i = 0;
-            while (i < globalApptCount) {
-                if (globalApptArray[i].getApptID() == deleteTargetID) {
-                    foundIndex = i;
-                    break;
-                }
-                i = i + 1;
-            }
+            algoSys.performBubbleSort(globalApptArray, globalApptCount);
+            int foundIndex = algoSys.performBinarySearch(globalApptArray, globalApptCount, deleteTargetID);
 
             if (foundIndex != -1) {
                 int j = foundIndex;
@@ -660,15 +816,11 @@ void runAdminModule(string currentLoggedInStaff) {
                 cout << ">> Record not found." << endl;
             }
         }
-        else if (menuChoice == 4) {
+        else if (menuChoice == 7) {
             cout << "\n--- Generating Admin Summary Report ---" << endl;
             adminReportSys.buildAdminSummaryReport();
         }
-        else if (menuChoice == 5) {
-            cout << "\n--- My Detailed Staff Profile ---" << endl;
-            currentAdmin.printDetailedProfile();
-        }
-        else if (menuChoice == 6) {
+        else if (menuChoice == 8) {
             keepRunningAdminModule = 0;
         }
     }
